@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<script src="https://code.jquery.com/jquery-3.5.1.slim.js"> </script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.0/jquery.maphilight.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="{% static "style/stl.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "style/mobile.css" %}">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/7361/7361736.png">
+    <title> {% block title %}{% endblock title %} | Україна починається з тебе</title>
+</head>
+<body>
+    <div class="header">
+        <div class="header-site_name">
+            <div>
+                <p>Україна починається з тебе</p>
+                <p><a href="{% url "main" %}">Рекордсмени</a></p>
+            </div>
+            <div>
+                <img src='{% static "media/activism.png" %}' alt="Pic">
+            </div>
+        </div>
+        {% block setting %}{% endblock setting %}
+    </div>  
+    <div class="main">
+        <div class="main_come-back-urls">
+            <p>
+                {%block site_name%}{%endblock site_name%}
+            </p>
+        </div>
+        <div class="main_content">
+            {% block content %}
+        
+            {% endblock content %}
+        </div>
+        
+    </div>
+    <div class="footer">
+        <div class="footer_contact-us">
+            <h2>Зв'язатися з нами: </h2>
+                <p>E-mail: <a href="mailto: dmytrii.yarmoliuk.light@gmail.com">Дмитро Ярмолюк</a></p>
+                <p>Тел.: <a href="tel: +380507148632">+380507148632</a></p>
+                <p>Telegram: <a href="https://t.me/vidrimateam">Vidrima</a></p>
+        </div>
+        <div class="footer_copyringt">
+            <h3>Copyright © 2023</h3>
+        </div>
+    </div>
+</body>
+</html>

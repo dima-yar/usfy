@@ -1,0 +1,94 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Рекорди: {{ region.region }}{% endblock title %}
+{% block setting %}
+<div class="guiness">Рекорди Гінеса</div>
+{% endblock setting %}
+{%block site_name%}
+    <a href="{% url "main" %}">Рекорди України</a> →
+    {{ region.region }}
+{%endblock site_name%}
+{% block content %}
+    <script>
+        $(document).ready(function(){
+            $('body').css({'background-image': 'url({{ region.background.url }})', "background-attachment": "fixed", "backdrop-filter": "blur(7px) brightness(50%)", "background-repeat":"no-repeat", "background-size": "cover"});
+        });
+    </script>
+    <div class="region-wrapper">
+        <div class="region-block">
+            <img src="{{ region.image.url }}" alt='{{ region.region }}'>
+        </div>
+        {% for record in regrec %}
+            
+            <div class="marker-container" style="top:{{ record.coordinate_y }}px; left:{{ record.coordinate_x }}vw;">
+                <div class="marker-block">
+                    <div class="marker {{ record.id }}">
+                        <svg class="marker-svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
+                            <path 
+                            d="M 215.7 499.2 C 267 435 384 279.4 384 192 C 384 86 298 0 192 0 S 0 86 0 192 c 0 87.4 117 243 168.3 307.2 c 12.3 15.3 35.1 15.3 47.4 0 z M 193 53 a 64 64 0 1 1 -1 283 a 64 64 0 1 1 1 -283" 
+                            fill="{{ record.color }}"
+                            >
+                        </svg>
+                        <img src="{{ record.record_holder_image.url }}">
+                    </div>
+                </div>
+                <div class="marker-info-block disabled {{ record.id }}q" style="box-shadow: 0px 0px 15px {{ record.color }};">
+                    <div class="block-photo">
+                        <img src="{{ record.record_holder_image.url }}">	
+                    </div>
+                    <div class="block-text-wrapper">
+                        <div class="block-name">
+                            <span class="name" style="color:black;">{{ record.record_holder }},</span>
+                            <span class="age" style="color:black;">
+                                {% if record.record_holders_age %}
+                                    {{ record.record_holders_age }}p,
+                                {% endif %}
+                            {{ record.record_holders_city }}</span>
+                        </div>
+                        <div class="block-record">
+                            {{ record.record_info }}
+                        </div>
+                    </div>
+                </div>
+            </div>	
+            <script>
+                $(document).ready(function(){
+                    $('.{{ record.id }}').click(function(event) {
+                            $('.marker-info-block').not('.{{ record.id }}q').addClass('disabled');
+                            $('.{{ record.id }}q').toggleClass('disabled');
+                    });
+                });
+            </script>
+        {% endfor %}
+    </div>
+    <div class="mobile">
+        {% for record in regrec %}
+            <div class="mobile-record-container" style="box-shadow: 0px 0px 7px {{ record.color }};">
+                <div class="marker-info-block">
+                    <div class="block-photo">
+                        <img src="{{ record.record_holder_image.url }}">	
+                    </div>
+
+                    <div class="block-text-wrapper">
+                        <div class="block-name">
+                            <span class="name"
+                            {%if record.color != '#5eb1f5'%}
+                                style="color:{{ record.color }}"
+                            {%endif%}
+                            >{{ record.record_holder }}</span>
+                            <span class="age"> 
+                            {% if record.record_holders_age %}
+                                {{ record.record_holders_age }}p,
+                            {% endif %}
+                            {{ record.record_holders_city }}</span>
+                        </div>
+                        <div class="block-record">
+                            {{ record.record_info }}
+                        </div>
+                    </div>
+                    <div class="block-blame"><img src="{% static "media/made-in-ukraine.png" %}" /></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
